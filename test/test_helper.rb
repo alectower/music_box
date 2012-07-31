@@ -1,0 +1,5 @@
+require 'music_box'
+require 'minitest/unit'
+require 'minitest/spec'
+require 'minitest/mock'
+require 'minitest/autorun'
