@@ -12,17 +12,17 @@ Or install it yourself as:
 
 ## Usage
 
-  user$ music_box
+    user$ music_box
 
-  Main Options:
+    Main Options:
 
-	shuffle                          : shuffle and play songs
-	play <artist> <album> <song>     : query for artist or song
-	help                             : display options
-	quit                             : exit MusicBox
+    shuffle                          : shuffle and play songs
+  	play <artist> <album> <song>     : query for artist or song
+  	help                             : display options
+  	quit                             : exit MusicBox
 
-	Playing Options:
+  	Playing Options:
 
-	next                             : play next song in queue
-	pause                            : pause song
-	resume                           : resume song
+  	next                             : play next song in queue
+  	pause                            : pause song
+  	resume                           : resume song
