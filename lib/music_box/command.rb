@@ -1,12 +1,12 @@
+require 'music_box/finder' 
+require 'music_box/io_handler'
+require 'music_box/display'
+require 'music_box/song'
+
 module MusicBox
   class Command
     include MusicBox::Finder
-    include MusicBox::IOHandler
     include MusicBox::Display
-    
-    def initialize(player)
-      @player = player
-    end
     
     def process_command(input)
       case input

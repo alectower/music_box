@@ -7,25 +7,9 @@ module MusicBox
       @path = song_path
     end
     
-    def play(&block)
-      @song = block.call(@path)
-      @song.play if @song
+    def title
+      @path
     end
-    
-    def stop
-      @song.stop if @song
-    end
-    
-    def pause
-      @song.pause if @song
-    end
-    
-    def resume
-      @song.resume if @song
-    end
-    
-    def playing?
-      @song.isPlaying if @song
-    end
+
   end
 end
