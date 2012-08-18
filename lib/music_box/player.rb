@@ -2,7 +2,7 @@ module MusicBox
   class Player
 
     def play(song)
-      @song = song
+      @song = NSSound.alloc.initWithContentsOfFile(song, byReference: false)
       song.play
     end
     
