@@ -8,7 +8,15 @@ module MusicBox
     end
     
     def title
-      @path
+      @path.split("/").last
+    end
+    
+    def album
+      @path.split("/")[-2]
+    end
+    
+    def artist
+      @path.split("/")[-3]
     end
 
   end

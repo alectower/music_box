@@ -1,2 +1,2 @@
 framework 'cocoa'
-require 'music_box/player'
+require 'music_box/runner'

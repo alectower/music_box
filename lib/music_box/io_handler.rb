@@ -1,16 +1,19 @@
+require 'music_box/display'
+
 module MusicBox
   class IOHandler
     
     IO_HASH = {:in => STDIN, :out => STDOUT, :io => IO}
     
-    def initialize(command)
+    def initialize(command, display)
       @command = command
+      @display = display
     end
     
     def get_input(io = IO_HASH, &block)
-      loop do
+      loop do 
         data = select_input(io)
-        @command.process_command(data) if data
+        (@command.process_command(data); @display.display_input_ready) if data
       end
     end
     

@@ -2,6 +2,10 @@ require 'music_box/version'
 
 module MusicBox
   class Display
+    
+    def initialize(player)
+      player.add_observer(self)
+    end
   
     GREEN = "\033[32m"
     WHITE = "\033[0m"
@@ -9,13 +13,8 @@ module MusicBox
     YELLOW = "\033[33m"
     RED = "\033[31m"
     
-    def initialize(player)
-      player.add_observer(self)
-    end
-    
     def display_program_info
-      program_info = "\nMusicBox v#{MusicBox::VERSION}"
-      puts program_info
+      puts "\nMusicBox v#{MusicBox::VERSION}"
     end
     
     def display_main_options
@@ -32,16 +31,21 @@ module MusicBox
       puts main_options
     end
   
-    def display_song_info(song_path_folders)
+    def display_song_info(song)
       playing_message = "\n#{GREEN}Playing...#{WHITE}"
-      playing_message << "\n\n\tArtist\t :: #{song_path_folders[7]}"
-      playing_message << "\n\tAlbum\t :: #{song_path_folders[8]}"
-      playing_message << "\n\tSong\t :: #{song_path_folders.last}"
+      playing_message << "\n\n\tArtist\t :: #{song.artist}"
+      playing_message << "\n\tAlbum\t :: #{song.album}"
+      playing_message << "\n\tSong\t :: #{song.title}"
       puts playing_message
     end
     
-    def update(song_info)
-      display_song_info(song_info)
+    def display_input_ready
+      print ">"
     end
+    
+    def update(song)
+      display_song_info(song)
+    end
+    
   end
 end
