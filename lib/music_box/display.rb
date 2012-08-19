@@ -45,6 +45,7 @@ module MusicBox
     
     def update(song)
       display_song_info(song)
+      display_input_ready
     end
     
   end

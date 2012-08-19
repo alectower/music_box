@@ -10,11 +10,9 @@ module MusicBox
       @display = display
     end
     
-    def get_input(io = IO_HASH, &block)
-      loop do 
-        data = select_input(io)
-        (@command.process_command(data); @display.display_input_ready) if data
-      end
+    def get_input(io = IO_HASH)
+      data = select_input(io)
+      @command.process_command(data) if data
     end
     
     def select_input(io)

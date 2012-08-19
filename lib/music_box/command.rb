@@ -13,8 +13,9 @@ module MusicBox
       case input
       when /^s(huffle)?.*$/
         shuffle
+        @player.play_song(@player.songs.shift)
       when /^n(ext)?.*$/
-        next_song
+        @player.next_song
       when /^q(uit)?.*$/
         exit
       when /^h(elp)?.*$/
@@ -27,17 +28,8 @@ module MusicBox
     end
     
     def shuffle
-      @songs = []
       find(".*\.[(m4a)(mp3)]$").sort_by{rand}.each do |song| 
-        @songs << MusicBox::Song.new(song)
-      end
-      @player.play_song(@songs.shift)
-    end
-    
-    def next_song
-      if @player.playing?
-        @player.stop_song
-        @player.play_song(@songs.shift)
+        @player.songs << MusicBox::Song.new(song)
       end
     end
     
