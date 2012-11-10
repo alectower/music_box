@@ -9,7 +9,7 @@ module MusicBox
       (puts "Did not find music folder : #{path}"; exit) unless Dir.exists? path
       songs = []
       Find.find(path) do |p|
-        songs << p if p =~ /#{regex}/
+        songs << p if p =~ /#{regex}/i
       end
       songs
     end

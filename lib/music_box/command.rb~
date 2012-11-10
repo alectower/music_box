@@ -35,7 +35,7 @@ module MusicBox
     def shuffle
       reset_player
       find_songs ".*\.[(m4a)(mp3)]$"
-      @player.songs.shuffle! 
+      @player.songs.shuffle! rand
     end
     
     def play_query(input)

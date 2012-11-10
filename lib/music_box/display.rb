@@ -19,14 +19,14 @@ module MusicBox
     
     def display_main_options
       main_options = "\n\t#{YELLOW}Main Options:#{WHITE}"
-      main_options << "\n\n\tshuffle                          : shuffle and play songs"
-      main_options << "\n\tplay <artist> <album> <song>     : query for artist or song"
-      main_options << "\n\thelp                             : display options"
-      main_options << "\n\tquit                             : exit MusicBox"
+      main_options << "\n\n\ts                             : shuffle and play songs"
+      main_options << "\n\t<artist> <album> <song>       : query for artist or song"
+      main_options << "\n\th                             : display options"
+      main_options << "\n\tq                             : exit MusicBox"
       main_options << "\n\n\t#{YELLOW}Playing Options:#{WHITE}"
-      main_options << "\n\n\tnext                             : play next song in queue"
-      main_options << "\n\tpause                            : pause song"
-      main_options << "\n\tresume                           : resume song"
+      main_options << "\n\n\tn                             : play next song in queue"
+      main_options << "\n\tp                             : pause song"
+      main_options << "\n\tr                             : resume song"
 
       puts main_options
     end

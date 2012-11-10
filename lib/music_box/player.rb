@@ -35,7 +35,7 @@ module MusicBox
     end
     
     def end_of_song?
-      @song.currentTime.to_i == @song.duration.to_i
+      (@song.currentTime.to_i == @song.duration.to_i) if @song
     end
     
     def next_song
