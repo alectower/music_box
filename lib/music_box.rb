@@ -1,1 +1,1 @@
-require 'music_box/runner'
+require 'music_box/player'
