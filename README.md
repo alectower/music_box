@@ -1,8 +1,13 @@
 # MusicBox
 
-In Development
+In Progress...
 
 MacRuby command line application to play music from iTunes location
+
+## Requirements
+  OSX
+  MacRuby
+  Ruby
 
 ## Installation
 
@@ -13,16 +18,10 @@ Or install it yourself as:
 ## Usage
 
     user$ music_box
+    
+    Options:
+                server start     : start music server as daemon
+                server stop      : stop music server daemon
 
-    Main Options:
-
-    shuffle                          : shuffle and play songs
-  	play <artist> <album> <song>     : query for artist or song
-  	help                             : display options
-  	quit                             : exit MusicBox
-
-  	Playing Options:
-
-  	next                             : play next song in queue
-  	pause                            : pause song
-  	resume                           : resume song
+                <query>          : play songs based on query
+                shuffle <query>  : shuffle songs based on query

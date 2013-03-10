@@ -2,6 +2,7 @@
 require File.expand_path('../lib/music_box/version', __FILE__)
 
 Gem::Specification.new do |gem|
+  gem.platform      = "universal-macruby"
   gem.name          = "music_box"
   gem.version       = MusicBox::VERSION
   gem.authors       = ["Alec Tower"]
@@ -13,4 +14,5 @@ Gem::Specification.new do |gem|
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ["lib"]
+  gem.add_development_dependency "rspec"
 end

@@ -1,53 +1,53 @@
-require 'observer'
-framework 'cocoa'
+require 'music_box/command_parser'
+require 'music_box/finder'
+require 'music_box/song'
+require 'singleton'
 
 module MusicBox
   class Player
-    include Observable
+    include Singleton
+
+    attr_reader :play_list, :command_parser, :song_finder, :song_thread, :current_song
     
-    attr_accessor :songs
-    
-    def initialize
-      @songs = []
+    def initialize(args = {})
+      @command_parser = args[:command_parser] || MusicBox::CommandParser.new
+      @song_finder = args[:song_finder] || MusicBox::Finder.new
+      @play_list = []
     end
     
-    def play_song(song)
-      @song = NSSound.alloc.initWithContentsOfFile(song.path, byReference: false)
-      changed
-      notify_observers(song)
-      @song.play if @song
+    def run_command(command)
+      command.chomp!
+      if current_song.respond_to? command.to_sym
+        current_song.send command.to_sym
+      else
+        update_play_list(command_parser.parse_command(command))
+      end 
     end
-    
-    def stop_song
-      @song.stop if @song
+
+    def update_play_list(player_args)
+      clean_up
+      @play_list = song_finder.find(player_args)
+      play
     end
-    
-    def pause_song
-      @song.pause if @song
-    end
-    
-    def resume_song
-      @song.resume if @song
-    end
-    
-    def playing?
-      @song.isPlaying if @song
-    end
-    
-    def end_of_song?
-      @song.currentTime.to_i == @song.duration.to_i
-    end
-    
-    def next_song
-      if playing?
-        stop_song
-        play_song(@songs.shift)
+
+    def play
+      @song_thread = Thread.new do
+        play_list.each do |song|
+          @current_song = MusicBox::Song.new(song)
+          puts "playing #{current_song.artist} - #{current_song.title}"
+          current_song.play
+          while !current_song.is_over?
+            sleep 3
+          end
+        end
       end
     end
-    
-    def play
-      play_song(@songs.shift) if (end_of_song? && !@songs.empty?)
+
+    def clean_up
+      current_song.stop unless current_song.nil?
+      play_list.clear
+      Thread.kill(song_thread) if song_thread
     end
-    
+
   end
 end

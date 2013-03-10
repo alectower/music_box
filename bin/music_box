@@ -1,7 +1,55 @@
-#!/usr/bin/env macruby
-lib = File.expand_path(File.dirname(__FILE__) + "/../lib")
-$: <<  lib unless $:.include? lib
+#!/usr/bin/env ruby
 
-require 'music_box'
+PROJECT_ROOT = File.expand_path(File.dirname(__FILE__) + "/..")
+PROJECT_LIB = PROJECT_ROOT + "/lib"
+$: << PROJECT_LIB unless $:.include? PROJECT_LIB
 
-MusicBox::Runner.new.run
+require 'rubygems'
+require 'fileutils'
+
+TEMP_DIR = PROJECT_ROOT + "/tmp"
+PID_FILE = TEMP_DIR + "/mbox.pid"
+LOG_FILE = TEMP_DIR + "/server.log"
+SPAWN_COMMAND = "/usr/bin/env macruby #{PROJECT_LIB}/music_box/server.rb"
+
+def clean_up_process
+  pid = IO.read(PID_FILE).chomp.to_i
+  if pid > 0
+    begin
+      Process.kill("KILL", pid)
+    rescue Errno::ESRCH
+      puts "Process with #{pid} already killed"
+    ensure
+      File.truncate(PID_FILE, 0)
+    end
+    puts "Killed server with process id #{pid}"
+  end
+end
+
+command = ARGV.shift
+case command
+when "server"
+  option = ARGV.shift
+  case option
+  when "start"
+    if File.exists?(PID_FILE) && !File.zero?(PID_FILE)
+      clean_up_process
+    end
+    FileUtils.touch LOG_FILE
+    pid = spawn(SPAWN_COMMAND, :err => [LOG_FILE, "w"])
+    File.open(PID_FILE, "w") { |file| file.puts pid }
+    Process.detach(pid)
+    puts "Started server with process id #{pid}"
+  when "stop"
+    clean_up_process
+  else
+    puts "start or stop command expected"
+  end
+when /^[^\s]+$/
+  require 'music_box/client'
+  MusicBox::Client.send_command "#{command} #{ARGV.join(" ").chomp}"
+else
+  puts "Options:"
+  puts "\t\tserver start : start server as daemon"
+  puts "\t\tserver stop  : stop server daemon"
+end
