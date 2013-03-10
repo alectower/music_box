@@ -25,3 +25,4 @@ Or install it yourself as:
 
                 <query>          : play songs based on query
                 shuffle <query>  : shuffle songs based on query
+
