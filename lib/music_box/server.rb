@@ -16,6 +16,7 @@ module MusicBox
     end
 
     def receive_data(data)
+      send_data "received command #{data}"
       player.run_command(data)
     end
   end

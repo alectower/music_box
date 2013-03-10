@@ -18,7 +18,6 @@ def clean_up_process
     begin
       Process.kill("KILL", pid)
     rescue Errno::ESRCH
-      puts "Process with #{pid} already killed"
     ensure
       File.truncate(PID_FILE, 0)
     end
